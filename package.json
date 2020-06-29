@@ -46,6 +46,7 @@
     "mocha": "^7.2.0",
     "nock": "^11.9.1",
     "nyc": "^15.1.0",
+    "oidc-provider": "^6.27.0",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
     "request": "^2.88.2",
