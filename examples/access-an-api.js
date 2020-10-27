@@ -10,25 +10,18 @@ app.use(
   auth({
     authorizationParams: {
       response_type: 'code',
-      audience: 'https://api.example.com/products',
-      scope: 'openid profile email offline_access read:products',
+      audience: process.env.AUDIENCE,
+      scope: 'openid profile email offline_access',
       prompt: 'consent',
     },
   })
 );
 
-app.get('/', async (req, res) => {
+app.get('/', (req, res, next) => {
   let { token_type, access_token, isExpired, refresh } = req.oidc.accessToken;
-  if (isExpired()) {
-    ({ access_token } = await refresh());
-  }
-  const products = await request.get(`http://localhost:${API_PORT}/products`, {
-    headers: {
-      Authorization: `${token_type} ${access_token}`,
-    },
-    json: true,
-  });
-  res.send(`Products: ${products.map(({ name }) => name).join(', ')}`);
+  console.log('the refresh token is: ', req.oidc.refreshToken);
+  res.send({ hello: 'world' });
+  next();
 });
 
 module.exports = app;
